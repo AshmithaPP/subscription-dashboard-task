@@ -1,22 +1,17 @@
 {
   "compilerOptions": {
-    /* ✅ File paths */
-    "rootDir": ".",
+    "rootDir": "src",
     "outDir": "./dist",
 
-    /* ✅ Environment settings */
     "target": "ES2020",
     "module": "CommonJS",
     "moduleResolution": "node",
     "lib": ["ES2020"],
     "types": ["node"],
-
-    /* ✅ Output options */
     "sourceMap": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
 
-    /* ✅ Strict type checking */
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true

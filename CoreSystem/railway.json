@@ -1,0 +1,11 @@
+{
+  "build": {
+    "steps": [
+      "cd client && npm install && npm run build",
+      "cd server && npm install"
+    ]
+  },
+  "deploy": {
+    "start": "cd server && node index.js"
+  }
+}
