@@ -1,13 +1,13 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "rootDirectory": "server",
+    "rootDirectory": "administration/CoreSystem/server",
     "commands": [
       "npm install",
       "npm run build"
     ]
   },
   "deploy": {
-    "startCommand": "node dist/server.js"
+    "startCommand": "npm start"
   }
 }
