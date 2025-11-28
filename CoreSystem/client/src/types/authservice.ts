@@ -8,7 +8,7 @@ const REFRESH_TOKEN_EXPIRY = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 class AuthService {
 private autoLogoutInterval: ReturnType<typeof setTimeout> | null = null;
-  private isInitialized = false;
+  // private isInitialized = false;
 
   // Store tokens securely
   storeTokens(accessToken: string, refreshToken: string): void {
@@ -19,13 +19,13 @@ private autoLogoutInterval: ReturnType<typeof setTimeout> | null = null;
       }
 
       const accessTokenExpiry = Date.now() + ACCESS_TOKEN_EXPIRY;
-      const refreshTokenExpiry = Date.now() + REFRESH_TOKEN_EXPIRY;
+      // const refreshTokenExpiry = Date.now() + REFRESH_TOKEN_EXPIRY;
 
       localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
       localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
       localStorage.setItem(TOKEN_EXPIRY_KEY, accessTokenExpiry.toString());
 
-      console.log('✅ Tokens stored successfully');
+      console.log(' Tokens stored successfully');
 
       // Also set cookies as backup
       this.setCookie(ACCESS_TOKEN_KEY, accessToken, ACCESS_TOKEN_EXPIRY);
@@ -94,7 +94,7 @@ private autoLogoutInterval: ReturnType<typeof setTimeout> | null = null;
       document.cookie = `${ACCESS_TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       document.cookie = `${REFRESH_TOKEN_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       
-      console.log('✅ Tokens cleared');
+      console.log(' Tokens cleared');
     } catch (error) {
       console.error('Error clearing tokens:', error);
     }
@@ -155,7 +155,7 @@ private autoLogoutInterval: ReturnType<typeof setTimeout> | null = null;
 
   // Debug method
   debugAuth(): void {
-    console.log('🔐 Auth Debug:');
+    console.log(' Auth Debug:');
     console.log('Access Token:', this.getAccessToken() ? 'Present' : 'Missing');
     console.log('Refresh Token:', this.getRefreshToken() ? 'Present' : 'Missing');
     console.log('Token Expiry:', localStorage.getItem(TOKEN_EXPIRY_KEY));

@@ -7,11 +7,12 @@ const config: { [key: string]: Knex.Config } = {
   development: {
     client: 'pg',
     connection: {
-      host: process.env.DB_HOST || 'localhost',
+      host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT || '5432'),
-      user: process.env.DB_USER || 'postgres',
-      password: process.env.DB_PASSWORD || '',
-      database: process.env.DB_NAME || 'subscription_db',
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      ssl: { rejectUnauthorized: false } // 🔥 Supabase requires SSL
     },
     migrations: {
       directory: './src/migrations',
@@ -26,9 +27,13 @@ const config: { [key: string]: Knex.Config } = {
       max: 10
     }
   },
+
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: {
+      connectionString: process.env.DATABASE_URL,  // Supports full URL on Railway/Render
+      ssl: { rejectUnauthorized: false }           // 🔥 Must include SSL
+    },
     migrations: {
       directory: './src/migrations'
     },

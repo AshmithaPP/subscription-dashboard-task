@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import RegisterModal from '../components/RegisterModal';
 import { authService } from '../types/authservice';
 
@@ -95,23 +96,21 @@ const LoginPage = () => {
     try {
       console.log('Attempting login...');
       
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const response = await axios.post<LoginResponse>(
+        'http://localhost:5000/api/auth/login',
+        {
           email: loginForm.email.trim(),
           password: loginForm.password
-        }),
-      });
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-      const data: LoginResponse = await response.json();
+      const data = response.data;
       console.log('Login response:', data);
-
-      if (!response.ok) {
-        throw new Error(data.message || `Login failed with status: ${response.status}`);
-      }
 
       if (data.success) {
         console.log('Login successful, storing tokens...');
@@ -151,9 +150,30 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error('Login error:', error);
+      
+      let errorMessage = 'Login failed. Please check your connection and try again.';
+      
+      if (axios.isAxiosError(error)) {
+        // Handle Axios errors
+        if (error.response) {
+          // Server responded with error status
+          const serverError = error.response.data as LoginResponse;
+          errorMessage = serverError.message || `Server error: ${error.response.status}`;
+        } else if (error.request) {
+          // Request was made but no response received
+          errorMessage = 'No response from server. Please check your connection.';
+        } else {
+          // Something else happened
+          errorMessage = error.message;
+        }
+      } else if (error instanceof Error) {
+        // Handle other Error types
+        errorMessage = error.message;
+      }
+      
       setMessage({ 
         type: 'error', 
-        text: error instanceof Error ? error.message : 'Login failed. Please check your connection and try again.' 
+        text: errorMessage
       });
       
       // Clear any existing tokens on login failure
