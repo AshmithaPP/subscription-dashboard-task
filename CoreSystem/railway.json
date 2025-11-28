@@ -1,7 +1,7 @@
 {
   "build": {
     "builder": "NIXPACKS",
-    "rootDirectory": "administration/CoreSystem/server",
+    "rootDirectory": "server",
     "commands": [
       "npm install",
       "npm run build"
