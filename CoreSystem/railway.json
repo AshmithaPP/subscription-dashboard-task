@@ -8,6 +8,6 @@
     ]
   },
   "deploy": {
-    "startCommand": "npm start"
+    "startCommand": "node dist/server.js"
   }
 }
